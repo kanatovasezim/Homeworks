@@ -16,6 +16,7 @@ sport_type integer references sport_type(id)
 insert into sport_type (name, salary) values ('Volleyball', 10000);
 insert into sport_type (name, salary) values ('Football', 1000);
 insert into sport_type (name, salary) values ('Basketball', 5000);
+insert into sport_type(name, salary) values ('Swimming', 7000);
 
 insert into trainers (name, phone_number, inn, gender, sport_type) 
 values ('Askat Musaev', '+996700123456', 116972313, 'male', 1);
@@ -23,7 +24,10 @@ insert into trainers (name, phone_number, inn, gender, sport_type)
 values ('Meerim Zamirbekova', '+996555123456', 1156721132, 'female', 2);
 insert into trainers (name, phone_number, inn, gender, sport_type) 
 values ('Aktan Kanatov', '+996777512312', 111412123, 'male', 3);
-
+insert into trainers (name, phone_number, inn, gender, sport_type) 
+values ('Amantur Kanatov', '+996772312312', 12344223, 'male', 4);
+insert into trainers (name, phone_number, inn, gender, sport_type) 
+values ('Jazgul Atabaeva', '+996550783453', 11144223, 'female', 4);
 
 create table visitors (
 id serial primary key,
@@ -31,10 +35,10 @@ name varchar(70) not null,
 datebirth varchar(10) not null,
 gender varchar(10)
 );
-
 create table visits (
 id serial primary key,
 time timestamp not null,
+visitor integer references visitors(id),
 trainer integer references trainers(id)
 );
 
@@ -42,6 +46,17 @@ trainer integer references trainers(id)
 insert into visitors(name, datebirth, gender) values ('Aziza Bekmanbetova', '12/03/1997', 'female');
 insert into visitors(name, datebirth, gender) values ('Nasiba Salmanbetova', '02/11/1999', 'female');
 insert into visitors(name, datebirth, gender) values ('Urmat Nurbekov', '11/05/2001', 'male');
-insert into visits(time, trainer) values ('2020-01-04 19:10:25', 1);
-insert into visits(time, trainer) values ('2020-01-03 20:00:01', 2);
-insert into visits(time, trainer) values ('2020-01-02 16:00:12', 3);
+insert into visits(time, visitor, trainer) values ('2020-01-04 19:10:25',3, 1);
+insert into visits(time, visitor, trainer) values ('2020-01-03 20:00:01',2, 2);
+insert into visits(time, visitor,trainer) values ('2020-01-02 16:00:12',1, 3);
+insert into visits(time, visitor,trainer) values ('2020-01-07 16:00:12',1, 4);
+insert into visits(time, visitor,trainer) values ('2020-01-12 16:00:12',1, 5);
+
+
+Select vs.name, t.name, v.time, st.name
+from visits v 
+join trainers t on v.trainer = t.id
+join sport_type st on t.sport_type = st.id
+join visitors vs on v.visitor = vs.id
+where st.id = 4
+order by time desc;
