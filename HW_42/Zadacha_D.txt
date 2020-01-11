@@ -1,0 +1,48 @@
+
+create table student(
+id serial primary key,
+name varchar(50) not null,
+group_id integer references "groups"(id),
+datebirth varchar(10) not null 
+);
+create table groups (
+id serial primary key,
+name varchar(50) not null,
+faculty_id integer references faculty(id),
+code varchar(30) not null unique
+);
+create table faculty(
+id serial primary key,
+name varchar(50) not null,
+university_id integer references university(id)
+);
+create table university(
+id serial primary key,
+name varchar(70) not null unique
+);
+
+create table grade ( 
+ student_id integer references student(id),
+ grade integer,
+ class varchar(30) not null
+);
+
+
+insert into university(name) values ('BHU');
+insert into faculty(name, university_id) values ('Chinese', 1);
+insert into groups(name, code, faculty_id) values ('1-AIN', '1A', 1);
+insert into student(name, group_id, datebirth) values ('Dinara Osmonova', 1,'12/11/1999');
+insert into grade(student_id, grade, class) values (1, 5,'Grammar');
+insert into grade(student_id, grade, class) values (1, 3,'Sport');
+insert into grade(student_id, grade, class) values (1, 5,'Writing');
+insert into grade(student_id, grade, class) values (1, 2,'Math');
+
+select avg(grade) 
+from grade 
+where student_id =1;
+
+select s.name, g."name",  f.name, u.name
+from student s
+join "groups" g on s.group_id = g.id
+join faculty f on g.faculty_id = f.id
+join university u on f.university_id = u.id;
