@@ -1,0 +1,58 @@
+Создать таблицы:
+Страны (Id, Название, Код страны, Население, Президент(?) )
+Города (Id, Название, Страна, Мэр(?), Население)
+Люди (Id, ФИО, Дата рождения)
+Заполнить данными таблицы (10 человек, 3 города, 2 страны  минимум)
+Выбрать все города страны, название которой начинается на букву «К»
+Подсчитать общее количество человек в городах каждой страны.
+Добавить возможность добавления понятия «Гос. Языка» к каждой стране.
+
+create table country(
+ id serial primary key,
+ name varchar(50) unique  not null,
+ code varchar(20) unique not null,
+ population integer not null
+);
+
+create table city(
+id serial primary key,
+name varchar(40) not null,
+population integer not null,
+country_id integer references country(id)
+);
+
+create table person(
+id serial primary key,
+name varchar(50) not null,
+birthdate varchar(10) not null,
+city_id integer references city(id)
+);
+
+insert into person(name, birthdate) values ('Azamat Taalaibekov', '12/11/1994');
+insert into person(name, birthdate) values ('Adilet Kanatov', '06/11/1998');
+insert into person(name, birthdate) values ('Arsen Kanybekov', '12/05/2005');
+insert into person(name, birthdate) values ('Amantur Kanatov', '19/01/2005');
+insert into person(name, birthdate) values ('Kaiyr Masletkanova', '11/08/1977');
+insert into person(name, birthdate) values ('Aida Umetova', '15/11/1988');
+insert into person(name, birthdate) values ('Beksultan Keneshov', '23/07/1993');
+insert into person(name, birthdate) values ('Daniiar Kozubekov', '26/01/1997');
+insert into person(name, birthdate) values ('Sooronbai Djeenbekov', '06/11/1969');
+insert into person(name, birthdate) values ('Aliya Nurmatova', '06/11/1994');
+insert into person(name, birthdate) values ('Aziz Surakmatov', '22/11/1971');
+insert into city(name, population, head) values ('Bishkek', 1042300, 11);
+insert into city(name, population, head) values ('Tokmok', 56998, 4);
+insert into city(name, population, head) values ('Talas', 85632, 5);
+insert into country(name, code, population, president) values ('Kyrgyzstan', '+996', 7141241, 9);
+insert into country(name, code, population, president) values ('Kazakhstan', '+7', 18589667, 2);
+update country set president = 14 where president=9;
+
+
+select  c2.name
+from country c2
+where c2.name like 'K%';
+select  c1.name
+from city c1
+where c1.name like 'K%';
+
+alter table country add column president integer references person(id);
+alter table country add column gov_language varchar(50);
