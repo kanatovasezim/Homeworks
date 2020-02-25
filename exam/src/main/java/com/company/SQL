@@ -1,0 +1,6 @@
+create table persons(
+id serial primary key,
+name varchar(100) not null,
+year_birth integer not null,
+gender int not null,
+registr_time timestamp not null);
