@@ -1,0 +1,5 @@
+how to getEmployee by ID?
+Employee is not mapped [FROM employee] -> what is mapping?
+why dowe use for getbyId session.get and for getall we use session.getQuery()?
+what is Proxy? what is the difference between lazy and eager? (get and load)
+getbyId? why we use Object, not id in the constructor?
